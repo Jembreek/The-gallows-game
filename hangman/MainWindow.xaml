@@ -1,0 +1,155 @@
+﻿<Window x:Class="hangman.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hangman"
+        mc:Ignorable="d"
+        Title="hangman" Height="485" Width="800" WindowStartupLocation="CenterScreen" MouseLeftButtonDown="MoveForm" WindowStyle="None" ResizeMode="NoResize" Icon="/resource/icon.png">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.7,1" StartPoint="0,0">
+            <GradientStop Color="#FF909090"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3,2,3,5"/>
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CaptionHeight="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <Window.Resources>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+            <Setter Property="Foreground" Value="#99000000"/>
+            <Setter Property="Background" Value="#33FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border
+                           CornerRadius="20"
+                           Background="{TemplateBinding Background}"
+                           BorderBrush="Black"
+                           BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#19FFFFFF"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SomeProperty}" Value="SmallRounded">
+                                <Setter Property="Border.CornerRadius" Value="10"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SomeProperty}" Value="LargeRounded">
+                                <Setter Property="Border.CornerRadius" Value="20"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#33FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                        CornerRadius="10"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#10191919"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#4CFFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Height="485" Width="800">
+
+        <Image Margin="0,40,0,0" Stretch="Fill" Width="800" Height="500" Opacity="0.05" Source="/resource/background1.jpg"/>
+
+        <Image Margin="0" Opacity="0.1" Stretch="Fill" Source="/resource/background3.jpg"/>
+
+        <Image Margin="194,-85,-194,85" Stretch="Fill" Opacity="0.15" RenderTransformOrigin="0.5,0.5" Source="/resource/background2.png">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-22.41"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Image Margin="-436,130,436,-130" Stretch="Fill" Opacity="0.25" RenderTransformOrigin="0.5,0.5" Source="/resource/background2.png">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="26.647"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="800" Background="#FF313131" Margin="-2,-2,0,0"/>
+
+        <Image HorizontalAlignment="Left" Height="25" Margin="4,5,0,0" VerticalAlignment="Top" Width="25" Source="/resource/icon.png"/>
+        <Label Content="HangMan" FontFamily="Sitka Text" FontSize="12" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
+        <Label Content="Х" HorizontalAlignment="Left" Margin="766,1,0,0" VerticalAlignment="Top" FontFamily="Sitka Text" FontSize="18" FontStyle="Italic" Foreground="White" FontWeight="Bold" Height="37" Width="25" MouseDown="CloseForm" Style="{DynamicResource LabelStyle}"/>
+        <Label Padding="7,5.5,0,0" Content="_" HorizontalAlignment="Left" Margin="742,-2,0,0" VerticalAlignment="Top" FontFamily="Sitka Text" FontStyle="Italic" FontSize="18" Foreground="White" FontWeight="Bold" Height="40" Width="24" MouseDown="MinimizeForm" Style="{DynamicResource LabelStyle}"/>
+
+        <Label Content="&#xA;&#xA;Добро пожаловать в игру &quot;Виселица&quot;.&#xA;Правила игры такие же, как у &#xA;оригинальной игры.&#xA;&#xA;Для того, чтобы начать игру, задайте&#xA;вопрос и заполните окно для ответа&#xA;&#xA;Желаем вам приятной игры!" HorizontalAlignment="Left" Margin="450,94,0,0" VerticalAlignment="Top" Height="320" Width="320" FontFamily="Sitka Text" FontSize="16"/>
+
+        <TextBox x:Name="questionBox" Padding="10,5,10,5" HorizontalAlignment="Left" Margin="55,145,0,0" TextWrapping="Wrap" Text="Ваш вопрос..." VerticalAlignment="Top" Width="350" Height="100" FontFamily="Sitka Text" FontSize="16" FontStyle="Oblique" Style="{DynamicResource TextBoxStyle}" MaxLength="140" TextAlignment="Justify" SelectionBrush="#FF9A9A9A"/>
+        <TextBox x:Name="answerBox" Padding="10,5,10,5" HorizontalAlignment="Left" Margin="55,262,0,0" TextWrapping="Wrap" Text="Ваш ответ..." VerticalAlignment="Top" Width="350" Height="30" FontFamily="Sitka Text" FontSize="16" FontStyle="Oblique" Style="{DynamicResource TextBoxStyle}" MaxLength="30" TextAlignment="Justify" SelectionBrush="#FF9A9A9A" PreviewTextInput="InputCheck"/>
+
+        <Button x:Name="startButton" Padding="10" Height="40" Width="350" HorizontalAlignment="Left" Margin="55,335,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" Content="Начать" FontWeight="Bold" FontSize="16" Click="StartClick"/>
+
+    </Grid>
+
+</Window>

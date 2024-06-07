@@ -1,0 +1,173 @@
+﻿<Window x:Class="hangman.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hangman"
+        mc:Ignorable="d"
+        Title="hangman" Height="490" Width="800" WindowStartupLocation="CenterScreen" Icon="/resource/icon.png" MouseLeftButtonDown="MoveForm" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.7,1" StartPoint="0,0">
+            <GradientStop Color="#FF909090"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3,2,3,5"/>
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CaptionHeight="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <Window.Resources>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+            <Setter Property="Foreground" Value="#99000000"/>
+            <Setter Property="Background" Value="#33FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border
+                           CornerRadius="20"
+                           Background="{TemplateBinding Background}"
+                           BorderBrush="Black"
+                           BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#19FFFFFF"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SomeProperty}" Value="SmallRounded">
+                                <Setter Property="Border.CornerRadius" Value="10"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SomeProperty}" Value="LargeRounded">
+                                <Setter Property="Border.CornerRadius" Value="20"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#33FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                        CornerRadius="10"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#10191919"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#4CFFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Height="485" Width="800">
+
+        <Image Margin="0,0,0,0" Stretch="Fill" Opacity="0.2" Source="/resource/another_background1.jpg"/>
+        <Image x:Name="bloodImage" Margin="0,0,0,0" Stretch="Fill" Opacity="0.1" Source="/background_animate/0.png"/>
+        <Image x:Name="hangmanImage" HorizontalAlignment="Left" Height="300" Width="150" Margin="543,153,0,0" VerticalAlignment="Top" Stretch="Fill" Source="/hangman_animate/0.png"/>
+
+        <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="800" Background="#FF313131" Margin="-2,-2,0,0"/>
+
+        <Image HorizontalAlignment="Left" Height="25" Margin="4,5,0,0" VerticalAlignment="Top" Width="25" Source="/resource/icon.png"/>
+        <Label Content="HangMan" FontFamily="Sitka Text" FontSize="12" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" Foreground="White"/>
+        <Label Content="Х" HorizontalAlignment="Left" Margin="766,1,0,0" VerticalAlignment="Top" FontFamily="Sitka Text" FontSize="18" FontStyle="Italic" Foreground="White" FontWeight="Bold" Height="37" Width="25" MouseDown="CloseForm" Style="{DynamicResource LabelStyle}"/>
+        <Label Padding="7,5.5,0,0" Content="_" HorizontalAlignment="Left" Margin="742,-2,0,0" VerticalAlignment="Top" FontFamily="Sitka Text" FontStyle="Italic" FontSize="18" Foreground="White" FontWeight="Bold" Height="40" Width="24" MouseDown="MinimizeForm" Style="{DynamicResource LabelStyle}"/>
+
+
+        <TextBlock x:Name="outQuestion_Label" TextWrapping="Wrap" Padding="10,5,10,5" HorizontalAlignment="Left" Margin="43,54,0,0" VerticalAlignment="Top" Height="100" Width="400" FontFamily="Sitka Text" FontSize="16" FontStyle="Oblique" FontWeight="Bold"/>
+        <TextBox x:Name="endBox" Padding="10,5,10,5" HorizontalAlignment="Left" Margin="69,423,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" Height="30" FontFamily="Sitka Text" FontSize="16" FontStyle="Oblique" Style="{DynamicResource TextBoxStyle}" MaxLength="30" TextAlignment="Justify" SelectionBrush="#FF9A9A9A" IsReadOnly="True"/>
+
+        <Button Content="А" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="69,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Б" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="119,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="В" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="169,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Г" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="219,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Д" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="269,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Е" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="319,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ё" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="369,163,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+
+        <Button Content="Ж" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="69,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="З" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="119,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="И" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="169,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Й" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="219,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="К" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="269,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Л" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="319,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="М" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="369,213,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+
+        <Button Content="Н" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="69,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="О" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="119,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="П" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="169,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Р" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="219,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="С" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="269,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Т" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="319,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="У" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="369,263,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+
+        <Button Content="Ф" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="69,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Х" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="119,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ц" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="169,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ч" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="219,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ш" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="269,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Щ" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="319,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ъ" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="369,313,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+
+        <Button Content="Ы" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="119,363,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ь" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="169,363,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Э" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="219,363,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Ю" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="269,363,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+        <Button Content="Я" Padding="10" Height="40" Width="40" HorizontalAlignment="Left" Margin="319,363,0,0" VerticalAlignment="Top" Style="{DynamicResource ButtonStyle}" FontWeight="Bold" FontSize="16" Click="LetterClick"/>
+
+        <Label Visibility="Hidden" x:Name="endLabel" HorizontalAlignment="Center" Margin="0,148,0,0" VerticalAlignment="Top" Width="800" Height="200" Background="#FF313131" BorderBrush="White" BorderThickness="0,3,0,3" />
+        <Label Visibility="Hidden" x:Name="endLabel2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="485" Background="#99313131" />
+        <Label Visibility="Hidden" x:Name="endMessage" Content="Вы умерли! Но еще может повезет..." FontFamily="Sitka Text" FontSize="32" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" Foreground="White" Width="767" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Visibility="Hidden" x:Name="endTimer" Content="3" FontFamily="Sitka Text" FontSize="80" HorizontalAlignment="Center" Margin="0,223,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" Foreground="White" Width="122" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+    </Grid>
+
+</Window>
